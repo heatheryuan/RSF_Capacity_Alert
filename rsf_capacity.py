@@ -15,15 +15,11 @@ def getChrome():
     return chrome
 
 
-def getCapacity():
-    chrome = getChrome()
+def getCapacity(chrome):
     try:
         capacity = WebDriverWait(chrome, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//*[@id='root']/div/div/div[1]/div[2]/div/span"))
         )
         capacity_text = capacity.text
     finally:
-        print('hello')
-        chrome.quit()
-    
-    return capacity_text
+        return capacity_text

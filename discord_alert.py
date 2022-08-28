@@ -8,7 +8,6 @@ import time
 # set up webhook using the url in config.py (not given in repo - private data)
 webhook = Webhook.from_url(config.webhook_url, adapter=RequestsWebhookAdapter())
 # send test message to url
-webhook.send("Hello World")
 
 # writes data, infinite loop
 # planning to daemonize this code to run forever on an EC2 instance or something
@@ -25,8 +24,9 @@ webhook.send("Hello World")
 
 
 def sendAlert(timeout=15, threshold=50):
+    chrome = rsf_capacity.getChrome()
     while True:
-        text = rsf_capacity.getCapacity()
+        text = rsf_capacity.getCapacity(chrome)
         webhook.send(text)
         time.sleep(timeout)
 
