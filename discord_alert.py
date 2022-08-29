@@ -23,11 +23,14 @@ webhook = Webhook.from_url(config.webhook_url, adapter=RequestsWebhookAdapter())
 # todo: time check, don't send alerts when the RSF isn't open
 
 
-def sendAlert(timeout=15, threshold=50):
+def sendAlert(timeout=60, threshold=90):
     chrome = rsf_capacity.getChrome()
     while True:
         text = rsf_capacity.getCapacity(chrome)
-        webhook.send(text)
+        capacity = int(text[:2])
+        if capacity <= threshold and capacity != last:
+            webhook.send(text)
+        last = capacity
         time.sleep(timeout)
 
 sendAlert()
