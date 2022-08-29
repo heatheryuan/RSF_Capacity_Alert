@@ -9,6 +9,8 @@ url = 'https://safe.density.io/#/displays/dsp_956223069054042646?token=shr_o69Hx
 def getChrome():
     opt = webdriver.ChromeOptions()
     opt.add_argument("--headless")
+    opt.add_argument('--no-sandbox')
+    opt.add_argument('--disable-dev-shm-usage')
     chrome = webdriver.Chrome(executable_path='./chromedriver', options=opt)
     chrome.get(url)
     return chrome
