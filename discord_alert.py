@@ -25,6 +25,7 @@ webhook = Webhook.from_url(config.webhook_url, adapter=RequestsWebhookAdapter())
 
 def sendAlert(timeout=60, threshold=90):
     chrome = rsf_capacity.getChrome()
+    last = -1
     while True:
         text = rsf_capacity.getCapacity(chrome)
         capacity = int(text[:2])
