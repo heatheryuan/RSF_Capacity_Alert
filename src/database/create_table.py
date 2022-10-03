@@ -9,8 +9,9 @@ cursor = conn.cursor()
 
 try:
     cursor.execute("""CREATE TABLE rsf_data (
-        capacity TINYINT(255)
-        datetime DATETIME(YYYY-MM-DD hh:mm:ss)
+        capacity int,
+        time time without time zone,
+        date date
         )""")
 except:
     print("ERROR: table failed to create")
