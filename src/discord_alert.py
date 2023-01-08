@@ -23,9 +23,11 @@ def sendAlert(timeout=60, threshold=70):
         hour = int(date.hour)
         
         time_range = valid_hours.get(day)
-        if (time_range[0] <= hour <= time_range[1]) and capacity <= threshold and abs(capacity-last) >= 5:
-            webhook.send(text)
-            last = capacity
+        if (time_range[0] <= hour <= time_range[1]) and capacity <= threshold:
+            if abs(capacity-last) >= 5:
+                webhook.send(text)
+                last = capacity
+            # write to database
         time.sleep(timeout)
 
 sendAlert()
