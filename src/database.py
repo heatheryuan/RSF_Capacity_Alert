@@ -2,34 +2,34 @@ import psycopg2
 from psycopg2 import extensions
 import config
 import sys
+from datetime import datetime
 
 def connect():
     conn = psycopg2.connect(
         user=config.db_user, password=config.db_pw, host=config.db_host, port=config.db_port
     )
-    print('successfully connected')
     return conn
 
-# def create_database():
-#     conn = connect()
-#     autocommit = extensions.ISOLATION_LEVEL_AUTOCOMMIT
-#     conn.set_isolation_level(autocommit)
-#     cursor = conn.cursor()
+def sql_query(cmd, params=None):
+    conn = connect()
+    cursor = conn.cursor()
 
-#     cursor.execute("""CREATE TABLE rsf_data (
-#             capacity integer,
-#             datetime timestamp
-#             )""")
+    cursor.execute(cmd, params)
 
-#     try:
-#         cursor.execute("""CREATE TABLE rsf_data (
-#             capacity INT,
-#             datetime DATETIME
-#             )""")
-#     except:
-#         print("ERROR: database already exists!")
+    conn.commit()
+    cursor.close()
+    conn.close()
+    
 
-#     cursor.close()
-#     conn.close()
+def write_data(capacity, datetime):
+    insert_query = """INSERT INTO rsf_data (capacity, datetime) VALUES (%s,%s)"""
+    params = (capacity, datetime)
+    
+    sql_query(insert_query, params)
 
-connect().close()
+    print('record inserted successfully')
+
+
+dt = datetime.now()
+print(dt)
+write_data(21, dt)
