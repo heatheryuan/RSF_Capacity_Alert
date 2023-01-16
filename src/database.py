@@ -30,6 +30,6 @@ def write_data(capacity, datetime):
     print('record inserted successfully')
 
 
-dt = datetime.now()
-print(dt)
-write_data(21, dt)
+# dt = datetime.now()
+# print(dt)
+# write_data(21, dt)
