@@ -29,6 +29,8 @@ def sendAlert(timeout=60, threshold=90):
     while True:
         text = rsf_capacity.getCapacity(chrome)
         capacity = int(text[:2])
+        print(capacity)
+        print(threshold)
         if capacity <= threshold and capacity != last:
             webhook.send(text)
         last = capacity
